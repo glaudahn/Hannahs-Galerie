@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Hannahs Galerie</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Hannahs Galerie</h1>
+    <p>Meine kreative Welt</p>
+</header>
+
+<div class="category-grid" id="category-grid"></div>
+
+<footer>
+    © 2025 Hannahs Galerie – 
+    <a href="impressum.html">Impressum</a> | 
+    <a href="datenschutz.html">Datenschutz</a> | 
+    <a href="kontakt.html">Kontakt</a>
+</footer>
+
+<div id="lightbox"><img id="lightbox-img" src=""></div>
+
+<script src="bilder.js"></script>
+<script>
+// Übersicht generieren
+const grid = document.getElementById("category-grid");
+for(const [kategorie,bilder] of Object.entries(galerien)){
+    const card = document.createElement("div");
+    card.className="category-card";
+    const title = document.createElement("h2");
+    title.textContent=kategorie.charAt(0).toUpperCase()+kategorie.slice(1);
+    card.appendChild(title);
+
+    bilder.slice(0,3).forEach(item=>{
+        const img=document.createElement("img");
+        img.src=item.src;
+        img.alt=item.caption;
+        card.appendChild(img);
+        img.addEventListener("click",()=>{
+            document.getElementById("lightbox-img").src=item.src;
+            document.getElementById("lightbox").style.display="flex";
+        });
+    });
+
+    const link=document.createElement("a");
+    link.href=kategorie+".html";
+    link.textContent="→ Zur "+title.textContent+"-Galerie";
+    link.style.display="block";
+    link.style.marginTop="5px";
+    card.appendChild(link);
+
+    grid.appendChild(card);
+}
+
+document.getElementById("lightbox").addEventListener("click",()=>{
+    document.getElementById("lightbox").style.display="none";
+});
+</script>
+
+</body>
+</html>
